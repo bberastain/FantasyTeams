@@ -25,6 +25,10 @@
                 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% else %}
                 <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
+                {% if current_user.username == 'admin' %}
+                <li><a href="{{ url_for('main.create_game') }}">Create Game</a></li>
+                <li><a href="{{ url_for('main.select_game') }}">Edit Game</a></li>
+                {% endif %}
                 <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                 {% endif %}
             </ul>

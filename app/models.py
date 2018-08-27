@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
+    pick = db.relationship('Pick', backref='author', lazy='dynamic')
 
 # the backref creates a habit.author expression
 # that returns the user given the habit
@@ -51,3 +52,20 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
+
+
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    week = db.Column(db.Integer)
+    away_id = db.Column(db.Integer)
+    away_value = db.Column(db.Integer)
+    home_id = db.Column(db.Integer)
+    home_value = db.Column(db.Integer)
+    winner_id = db.Column(db.Integer)
+
+
+class Pick(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    week = db.Column(db.Integer)
+    team_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
